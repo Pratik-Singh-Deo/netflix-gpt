@@ -9,7 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { USER_AVATAR } from "../utils/constants"
+import { BG_URL, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -36,8 +36,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              USER_AVATAR,
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -48,7 +47,7 @@ const Login = () => {
                   displayName: displayName,
                   photoURL: photoURL,
                 })
-              )
+              );
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -67,7 +66,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           // Signed in
-          const user = userCredential.user
+          const user = userCredential.user;
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -84,52 +83,56 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="relative bg-[url('https://assets.nflxext.com/ffe/siteui/vlv3/42df4e1f-bef6-499e-87ff-c990584de314/5e7c383c-1f88-4983-b4da-06e14c0984ba/IN-en-20230904-popsignuptwoweeks-perspective_alpha_website_large.jpg')] h-screen bg-center bg-cover">
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="w-9/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-75"
-        >
-          <h1 className="font-bold text-3xl">
-            {isSignInForm ? "Sign In" : "Sign Up"}
-          </h1>
-          {!isSignInForm && (
-            <input
-            ref={name}
-              type="text"
-              placeholder="Full Name"
-              className="p-4 my-4 w-full bg-gray-700"
-            />
-          )}
-
-          <input
-            ref={email}
-            type="text"
-            placeholder="Email Address"
-            className="p-4 my-4 w-full bg-gray-700"
-          />
-
-          <input
-            ref={password}
-            type="password"
-            placeholder="Password"
-            className="p-4 my-4 w-full bg-gray-700"
-          />
-          <p className="text-red-500 font-bold text-lg py-2">{errorMessage}</p>
-
-          <button
-            className="p-4 my-6 bg-red-700 w-full rounded-lg"
-            onClick={handleButtonClick}
-          >
-            {isSignInForm ? "Sign In" : "Sign Up"}
-          </button>
-
-          <p className="py-6 cursor-pointer" onClick={toggleSignInForm}>
-            {isSignInForm
-              ? "New to Netflix Sign Up Now."
-              : "Already registered? Sign In Now."}
-          </p>
-        </form>
+      <div className="absolute">
+        <img
+          src={BG_URL}
+          alt="logo"
+        />
       </div>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="w-9/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-75"
+      >
+        <h1 className="font-bold text-3xl">
+          {isSignInForm ? "Sign In" : "Sign Up"}
+        </h1>
+        {!isSignInForm && (
+          <input
+            ref={name}
+            type="text"
+            placeholder="Full Name"
+            className="p-4 my-4 w-full bg-gray-700"
+          />
+        )}
+
+        <input
+          ref={email}
+          type="text"
+          placeholder="Email Address"
+          className="p-4 my-4 w-full bg-gray-700"
+        />
+
+        <input
+          ref={password}
+          type="password"
+          placeholder="Password"
+          className="p-4 my-4 w-full bg-gray-700"
+        />
+        <p className="text-red-500 font-bold text-lg py-2">{errorMessage}</p>
+
+        <button
+          className="p-4 my-6 bg-red-700 w-full rounded-lg"
+          onClick={handleButtonClick}
+        >
+          {isSignInForm ? "Sign In" : "Sign Up"}
+        </button>
+
+        <p className="py-6 cursor-pointer" onClick={toggleSignInForm}>
+          {isSignInForm
+            ? "New to Netflix Sign Up Now."
+            : "Already registered? Sign In Now."}
+        </p>
+      </form>
     </div>
   );
 };
